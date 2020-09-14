@@ -6,3 +6,6 @@ Valid effective addresses in 16-bit mode are [BX], [SI], [DI], [BX+SI],
 the SS segment, everything else defaults to using DS.
 
 Or you could do: MOV AL, 0x0F / MOV CX, 64000 / REPZ / STOSB
+
+CX is the best counter register, because there's a JCXZ instruction... and a
+LOOP instruction, and the REPeat prefix for "string" instructions.

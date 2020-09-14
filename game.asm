@@ -1,3 +1,7 @@
+%define WIDTH 320
+%define HEIGHT 200
+%define ROW 64
+
 [org 0x7c00]  ; start writing code in the boot sector
 
 mov ax, 0x13  ; set VGA video mode
@@ -12,6 +16,13 @@ bgloop:
   inc bx
   cmp bx, 65535  ; 2**16 - 1
   jb bgloop      ; jump until overflow
+
+mov bx, WIDTH * ROW
+lineloop:
+  mov BYTE [es:bx], 0xf ; white color
+  inc bx
+  cmp bx, WIDTH * ROW + WIDTH
+  jb lineloop
 
 mov bx, HELLO_MSG
 call print_string
