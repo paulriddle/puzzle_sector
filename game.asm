@@ -1,7 +1,17 @@
 [org 0x7c00]  ; start writing code in the boot sector
 
-mov ax, 0x0   ; set video mode
+mov ax, 0x13  ; set VGA video mode
 int 0x10      ; think of it as function call interruput(ax)
+
+mov ax, 0xa000
+mov es, ax
+
+mov bx, 0
+bgloop:
+  mov BYTE [es:bx], 0x5
+  inc bx
+  cmp bx, 65535  ; 2**16 - 1
+  jb bgloop      ; jump until overflow
 
 mov bx, HELLO_MSG
 call print_string
